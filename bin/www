@@ -6,7 +6,11 @@
 
 var app = require('../app');
 var debug = require('debug')('todo-app:server');
-var http = require('http');
+var https = require('https');
+var fs = require('fs');
+var dotenv = require('dotenv');
+
+dotenv.config();
 
 /**
  * Get port from environment and store in Express.
@@ -18,8 +22,11 @@ app.set('port', port);
 /**
  * Create HTTP server.
  */
-
-var server = http.createServer(app);
+var server = https.createServer({
+  key: fs.readFileSync('./cert.key'),
+  cert: fs.readFileSync('./cert.pem'),
+  passphrase: process.env.PASSPHRASE || 'test'
+}, app);
 
 /**
  * Listen on provided port, on all network interfaces.
