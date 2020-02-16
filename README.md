@@ -8,6 +8,3 @@ Sertificate pass phrase should be saved in `.env` file as:
 
 ### `npm start`
 Runs the app on 443 port in the browser. Returns content from `./client/build ` folder.<br>
-
-### Additional info
-SSL sertificate
