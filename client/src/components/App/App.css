@@ -1,0 +1,29 @@
+:root {
+    --primary-bg-color: #caf2d7;
+    --secondary-bg-color: #60a9a6;
+    --fieldset-color: #6bbbb8;
+}
+
+body {
+    background-color: var(--primary-bg-color);
+}
+
+div .todo-item {
+    background-color: var(--secondary-bg-color);
+}
+
+.todo-item {
+    background-color: var(--secondary-bg-color);
+}
+
+.todo-text-field {
+    width: 100%;    
+}
+
+.todo-text-field input {
+    z-index: 5;   
+}
+
+.todo-text-field fieldset {
+    background-color: var(--fieldset-color);
+}
