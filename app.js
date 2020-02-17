@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const { connectDb, models } = require('./models');
 const appRouter = require('./routes/app');
-const authRouter = require('./auth/authController');
+const authRouter = require('./routes/auth');
 const dotenv = require('dotenv');
 
 dotenv.config();

@@ -1,19 +1,56 @@
 const express = require('express');
-const { generateJWTToken } = require('../common/authUtil');
-
 const router = express.Router();
+const bodyParser = require('body-parser');
+const { secret } = require('../constants');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
-router.get('/sign-in', (req, res) => {
-    const { username, password } = req.body;
-    if (!username || !password || users[username] !== password) {
-      return res.status(401).end();
-    }
-  
-    const token = generateJWTToken({ username, password });
+router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.json());
 
-    res.cookie('token', token);
-    res.end();
-  
+const User = require('../models/user');
+
+router.post('/login', (req, res) => {
+
+  User.findOne({ username: req.body.username }, function (err, user) {
+    if (err) return res.status(500).send('Error on the server.');
+    if (!user) return res.status(404).send('No user found.');
+    
+    const passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+    if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
+
+    const token = jwt.sign({ id: user._id }, secret, {
+      expiresIn: 86400
+    });
+
+    res.status(200).send({ auth: true, token });
+  });
+
+});
+
+router.get('/logout', (req, res) => {
+  res.status(200).send({ auth: false, token: null });
+});
+
+router.post('/register', (req, res) => {
+  const hashedPassword = bcrypt.hashSync(req.body.password, 8);
+
+  User.create({
+    name: req.body.name,
+    email: req.body.email,
+    username: req.body.username,
+    password: hashedPassword,
+  }, 
+  (err, user) => {
+    if (err) return res.status(500).send("There was a problem registering the user`.");
+
+    const token = jwt.sign({ id: user._id }, secret, {
+      expiresIn: 86400
+    });
+
+    res.status(200).send({ auth: true, token });
+  });
+
 });
 
 module.exports = router;
