@@ -4,11 +4,11 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('todo-app:server');
-var https = require('https');
-var fs = require('fs');
-var dotenv = require('dotenv');
+const app = require('../app');
+const debug = require('debug')('todo-app:server');
+const https = require('https');
+const fs = require('fs');
+const dotenv = require('dotenv');
 
 dotenv.config();
 
@@ -16,13 +16,13 @@ dotenv.config();
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
-var server = https.createServer({
+const server = https.createServer({
   key: fs.readFileSync('./cert.key'),
   cert: fs.readFileSync('./cert.pem'),
   passphrase: process.env.PASSPHRASE || 'test'
