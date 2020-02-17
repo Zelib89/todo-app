@@ -1,49 +1,62 @@
-import React, { useState } from 'react';
-import { Formik } from 'formik';
-import Container from '@material-ui/core/Container';
-import TodoForm from '../TodoForm';
-import TodoItem from '../TodoItem';
-import './App.css';
+import React from 'react';
+import { Router, Route, Link } from 'react-router-dom';
+import { history } from '../../utils/history';
+import { authenticationService } from '../../services/auth';
+import { PrivateRoute } from '../PrivateRoute';
+import { Home } from '../Home';
+import { LoginPage } from '../LoginPage/LoginPage';
 
-const App = () => {
-  const [todos, setTodos] = useState([]);
+class App extends React.Component {
+  constructor(props) {
+    super(props);
 
-  const onFormSubmit = (values, {resetForm}) => {
-    const { text } = values;
-    if (text !== undefined && text !== '') {
-      setTodos([
-        ...todos, {
-          id: todos.length,
-          text
-        }
-      ]);
-      resetForm();
-    }
-  };
-
-  const onTodoRemove = (index) => {
-    setTodos(todos.filter(t => t.id !== index));
+    this.state = {
+      currentUser: null
+    };
   }
 
-  return (
-    <Container >
-      <Formik
-        initialValues={{ text: '' }}
-        render={props => (<TodoForm {...props} />)}
-        onSubmit={onFormSubmit}
-      />
-      <Container>
-        {todos.map(todo =>
-          <TodoItem
-            key={todo.id}
-            text={todo.text}
-            onRemove={onTodoRemove.bind(null, todo.id)}
-          />
-        )}
-      </Container>
-  </Container>
-  )
+  componentDidMount() {
+    authenticationService.currentUser.subscribe(x =>
+      this.setState({ currentUser: x })
+    );
+  }
 
-};
+  logout() {
+    authenticationService.logout();
+    history.push('/login');
+  }
 
-export default App;
+  render() {
+    const { currentUser } = this.state;
+    return (
+      <Router history={history}>
+        <div>
+          {currentUser && (
+            <nav className="navbar navbar-expand navbar-dark bg-dark">
+              <div className="navbar-nav">
+                <Link to="/" className="nav-item nav-link">
+                  Home
+                </Link>
+                <a onClick={this.logout} className="nav-item nav-link">
+                  Logout
+                </a>
+              </div>
+            </nav>
+          )}
+          <div className="jumbotron">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-6 offset-md-3">
+                  <PrivateRoute exact path="/" component={Home} />
+                  <Route path="/login" component={LoginPage} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Router>
+    );
+  }
+}
+
+export { App };
