@@ -3,8 +3,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const { connectDb, models } = require('./models');
-const indexRouter = require('./routes/index');
 const appRouter = require('./routes/app');
+const authRouter = require('./auth/authController');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -18,8 +18,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.use('/', indexRouter);
 app.use('/app', appRouter);
+app.use('/', authRouter);
 
 connectDb().then(() => {
   console.log('DB started');
