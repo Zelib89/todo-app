@@ -27,7 +27,6 @@ class App extends React.Component {
   }
 
   render() {
-    const { currentUser } = this.state;
     return (
       <Router history={history}>
         <div>

@@ -1,5 +1,5 @@
 const config = {
-  apiUrl: 'localhost:443'
+  apiUrl: 'https://localhost:443'
 };
 
 export default config;
