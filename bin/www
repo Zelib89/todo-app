@@ -3,14 +3,11 @@
 /**
  * Module dependencies.
  */
-
+require('../config');
 const app = require('../app');
 const debug = require('debug')('todo-app:server');
 const https = require('https');
 const fs = require('fs');
-const dotenv = require('dotenv');
-
-dotenv.config();
 
 /**
  * Get port from environment and store in Express.

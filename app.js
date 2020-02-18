@@ -6,10 +6,7 @@ const { connectDb } = require('./models');
 const appRouter = require('./routes/app');
 const authRouter = require('./routes/auth');
 const todoRouter = require('./routes/todo');
-const dotenv = require('dotenv');
 const cors = require('cors');
-
-dotenv.config();
 
 const app = express();
 

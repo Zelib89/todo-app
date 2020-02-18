@@ -1,10 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const bodyParser = require('body-parser');
 const { verifyToken } = require('../middleware/verifyToken');
-
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(bodyParser.json());
 
 const Todo = require('../models/todo');
 
