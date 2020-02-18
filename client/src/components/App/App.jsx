@@ -31,24 +31,16 @@ class App extends React.Component {
     return (
       <Router history={history}>
         <div>
-          {currentUser && (
-            <nav className="navbar navbar-expand navbar-dark bg-dark">
-              <div className="navbar-nav">
-                <Link to="/" className="nav-item nav-link">
-                  Home
-                </Link>
-                <a onClick={this.logout} className="nav-item nav-link">
-                  Logout
-                </a>
-              </div>
-            </nav>
-          )}
           <div className="jumbotron">
             <div className="container">
               <div className="row">
                 <div className="col-md-6 offset-md-3">
                   <PrivateRoute exact path="/" component={Home} />
-                  <Route path="/login" component={LoginPage} />
+                  <div style={{display: 'flex', width: '100%', height: 'calc(100vh - 100px)', alignItems: 'center',
+  justifyContent: 'center'}}>
+                    <Route path="/login" component={LoginPage} />
+                  </div>
+
                 </div>
               </div>
             </div>

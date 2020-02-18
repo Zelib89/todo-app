@@ -1,8 +1,19 @@
 import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { Formik, Field, Form } from 'formik';
+import { Paper, withStyles, Grid, TextField, Button, FormControlLabel, Checkbox } from '@material-ui/core';
+import { Face, Fingerprint } from '@material-ui/icons'
 import * as Yup from 'yup';
-
 import { authService } from '../../services/auth';
+
+const styles = theme => ({
+  margin: {
+      margin: theme.spacing.unit * 2,
+  },
+  padding: {
+      padding: theme.spacing.unit
+  },
+  width: '400px',
+});
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -14,14 +25,10 @@ class LoginPage extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
+
     return (
-      <div>
-        <div className="alert alert-info">
-          Username: test
-          <br />
-          Password: test
-        </div>
-        <h2>Login</h2>
+      <div style={{width: '400px'}}>
         <Formik
           initialValues={{
             username: "",
@@ -48,51 +55,29 @@ class LoginPage extends React.Component {
           }}
           render={({ errors, status, touched, isSubmitting }) => (
             <Form>
-              <div className="form-group">
-                <label htmlFor="username">Username</label>
-                <Field
-                  name="username"
-                  type="text"
-                  className={
-                    "form-control" +
-                    (errors.username && touched.username ? " is-invalid" : "")
-                  }
-                />
-                <ErrorMessage
-                  name="username"
-                  component="div"
-                  className="invalid-feedback"
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="password">Password</label>
-                <Field
-                  name="password"
-                  type="password"
-                  className={
-                    "form-control" +
-                    (errors.password && touched.password ? " is-invalid" : "")
-                  }
-                />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="invalid-feedback"
-                />
-              </div>
-              <div className="form-group">
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  disabled={isSubmitting}
-                >
-                  Login
-                </button>
-                {isSubmitting && (
-                  <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                )}
-              </div>
-              {status && <div className={"alert alert-danger"}>{status}</div>}
+              <Paper className={classes.padding}>
+                <div className={classes.margin}>
+                    <Grid container spacing={8} alignItems="flex-end">
+                        <Grid item>
+                            <Face />
+                        </Grid>
+                        <Grid item md={true} sm={true} xs={true}>
+                            <TextField id="username" name="username" label="Username" type="email" fullWidth autoFocus required />
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={8} alignItems="flex-end">
+                        <Grid item>
+                            <Fingerprint />
+                        </Grid>
+                        <Grid item md={true} sm={true} xs={true}>
+                            <TextField id="password" name="password" label="Password" type="password" fullWidth required />
+                        </Grid>
+                    </Grid>
+                    <Grid container justify="center" style={{ marginTop: '10px' }}>
+                        <Button disabled={isSubmitting} type="submit" variant="outlined" color="primary" style={{ textTransform: "none" }}>Login</Button>
+                    </Grid>
+                </div>
+              </Paper>
             </Form>
           )}
         />
@@ -101,4 +86,4 @@ class LoginPage extends React.Component {
   }
 }
 
-export default LoginPage;
+export default withStyles(styles)(LoginPage);
