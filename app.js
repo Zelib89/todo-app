@@ -7,11 +7,13 @@ const appRouter = require('./routes/app');
 const authRouter = require('./routes/auth');
 const todoRouter = require('./routes/todo');
 const dotenv = require('dotenv');
+const cors = require('cors');
 
 dotenv.config();
 
 const app = express();
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
