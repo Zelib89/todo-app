@@ -6,7 +6,7 @@ import './LoginPage.css';
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
-
+    console.log('Login', this, props );
     if (authService.currentUserValue) {
       this.props.history.push("/");
     }
