@@ -28,8 +28,10 @@ const login = (username, password) => {
 }
 
 const logout = () => {
-    localStorage.removeItem('currentUser');
-    currentUserSubject.next(null);
+    return fetch(`${config.apiUrl}/logout`).then(() => {
+        localStorage.removeItem('currentUser');
+        currentUserSubject.next(null);
+    });
 }
 
 export const authService = {
