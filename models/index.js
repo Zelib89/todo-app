@@ -6,6 +6,8 @@ const connectDb = () => {
   return mongoose.connect(process.env.DATABASE_URL, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
+    user: process.env.DB_USERNAME,
+    pass: process.env.DB_PASSWORD,
   });
 };
 
