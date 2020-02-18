@@ -1,16 +1,9 @@
 import { BehaviorSubject } from 'rxjs';
 
-import config from '../../config';
-import { handleResponse } from '../utils';
+import config from '../config';
+import { handleResponse } from '../utils/serverResponse';
 
 const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
-
-export const authService = {
-    login,
-    logout,
-    currentUser: currentUserSubject.asObservable(),
-    get currentUserValue () { return currentUserSubject.value }
-};
 
 const login = (username, password) => {
     const requestOptions = {
@@ -32,3 +25,10 @@ const logout = () => {
     localStorage.removeItem('currentUser');
     currentUserSubject.next(null);
 }
+
+export const authService = {
+    login,
+    logout,
+    currentUser: currentUserSubject.asObservable(),
+    get currentUserValue () { return currentUserSubject.value }
+};

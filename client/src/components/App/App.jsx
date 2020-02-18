@@ -1,10 +1,10 @@
 import React from 'react';
 import { Router, Route, Link } from 'react-router-dom';
 import { history } from '../../utils/history';
-import { authenticationService } from '../../services/auth';
-import { PrivateRoute } from '../PrivateRoute';
-import { Home } from '../Home';
-import { LoginPage } from '../LoginPage/LoginPage';
+import { authService } from '../../services/auth';
+import PrivateRoute from '../PrivateRoute';
+import Home from '../Home';
+import LoginPage from '../LoginPage/LoginPage';
 
 class App extends React.Component {
   constructor(props) {
@@ -16,13 +16,13 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    authenticationService.currentUser.subscribe(x =>
+    authService.currentUser.subscribe(x =>
       this.setState({ currentUser: x })
     );
   }
 
   logout() {
-    authenticationService.logout();
+    authService.logout();
     history.push('/login');
   }
 

@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 import Container from '@material-ui/core/Container';
 import TodoForm from '../TodoForm';
 import TodoItem from '../TodoItem';
-import './App.css';
+import './Home.css';
 
 const Home = () => {
   const [todos, setTodos] = useState([]);

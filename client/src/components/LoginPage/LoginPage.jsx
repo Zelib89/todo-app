@@ -1,15 +1,15 @@
-import React from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import React from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 
-import { authenticationService } from "../../services/auth";
+import { authService } from '../../services/auth';
 
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
 
-    if (authenticationService.currentUserValue) {
-      this.props.history.push("/");
+    if (authService.currentUserValue) {
+      this.props.history.push('/');
     }
   }
 
@@ -33,7 +33,7 @@ class LoginPage extends React.Component {
           })}
           onSubmit={({ username, password }, { setStatus, setSubmitting }) => {
             setStatus();
-            authenticationService.login(username, password).then(
+            authService.login(username, password).then(
               user => {
                 const { from } = this.props.location.state || {
                   from: { pathname: "/" }
@@ -101,4 +101,4 @@ class LoginPage extends React.Component {
   }
 }
 
-export { LoginPage };
+export default LoginPage;
