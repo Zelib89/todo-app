@@ -4,8 +4,7 @@ const { verifyToken } = require('../middleware/verifyToken');
 
 const Todo = require('../models/todo');
 
-router.use(verifyToken);
-router.get('/', (req, res) => {
+router.get('/', verifyToken, (req, res) => {
 
   Todo.find({}, (err, data) => {
     if (err) return res.status(500).send('Error on the server.');
@@ -16,7 +15,7 @@ router.get('/', (req, res) => {
 
 });
 
-router.post('/', (req, res) => {
+router.post('/', verifyToken, (req, res) => {
   Todo.create({
     text: req.body.text,
     status:  req.body.status,
