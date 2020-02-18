@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import config from '../config';
 import { handleResponse } from '../utils/serverResponse';
 
-const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
+const currentToken = new BehaviorSubject(JSON.parse(localStorage.getItem('token')));
 
 const login = (username, password) => {
     const searchParams = new URLSearchParams();
@@ -20,23 +20,23 @@ const login = (username, password) => {
 
     return fetch(`${config.apiUrl}/login`, requestOptions)
         .then(handleResponse)
-        .then(user => {
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            currentUserSubject.next(user);
-            return user;
+        .then(response => {
+            localStorage.setItem('token', JSON.stringify(response.token));
+            currentToken.next(response.token);
+            return response.token;
         });
 }
 
 const logout = () => {
     return fetch(`${config.apiUrl}/logout`).then(() => {
-        localStorage.removeItem('currentUser');
-        currentUserSubject.next(null);
+        localStorage.removeItem('token');
+        currentToken.next(null);
     });
 }
 
 export const authService = {
     login,
     logout,
-    currentUser: currentUserSubject.asObservable(),
-    get currentUserValue () { return currentUserSubject.value }
+    currentToken: currentToken.asObservable(),
+    get currentTokenValue () { return currentToken.value }
 };

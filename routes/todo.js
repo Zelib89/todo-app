@@ -10,7 +10,7 @@ router.get('/', verifyToken, (req, res) => {
     if (err) return res.status(500).send('Error on the server.');
     if (!data) return res.status(404).send('No data found.');
 
-    res.status(200).send({ auth: true, data });
+    res.status(200).send({ data });
   });
 
 });

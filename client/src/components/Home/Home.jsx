@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import Container from '@material-ui/core/Container';
 import TodoForm from '../TodoForm';
 import TodoItem from '../TodoItem';
+import { todoService } from "../../services/todo";
 import './Home.css';
 
 const Home = () => {
@@ -10,15 +11,17 @@ const Home = () => {
 
   const onFormSubmit = (values, {resetForm}) => {
     const { text } = values;
-    if (text !== undefined && text !== '') {
-      setTodos([
-        ...todos, {
-          id: todos.length,
-          text
-        }
-      ]);
-      resetForm();
-    }
+    todoService.saveTodo(text).then(() => {
+      if (text !== undefined && text !== '') {
+        setTodos([
+          ...todos, {
+            id: todos.length,
+            text
+          }
+        ]);
+        resetForm();
+      }
+    });
   };
 
   const onTodoRemove = (index) => {

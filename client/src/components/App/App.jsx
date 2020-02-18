@@ -9,11 +9,11 @@ import Home from "../Home";
 import LoginPage from "../LoginPage/LoginPage";
 
 const App = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentToken, setCurrentToken] = useState(null);
 
   useEffect(() => {
-    const subscription = authService.currentUser.subscribe(x => {
-      setCurrentUser(x);
+    const subscription = authService.currentToken.subscribe(x => {
+      setCurrentToken(x);
     });
     return subscription.unsubscribe();
   }, []);
@@ -27,7 +27,7 @@ const App = () => {
     <Router history={history}>
       <div>
         <div className="jumbotron">
-          {currentUser && (
+          {currentToken && (
             <IconButton size="small" onClick={logout}>
               <ExitToAppIcon />
             </IconButton>
