@@ -21,7 +21,6 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  console.log(req.userId);
   Todo.create({
     text: req.body.text,
     status:  req.body.status,
