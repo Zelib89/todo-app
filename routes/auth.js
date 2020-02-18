@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const { secret } = require('../constants');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
@@ -15,7 +14,7 @@ router.post('/login', (req, res) => {
     const passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
     if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
 
-    const token = jwt.sign({ id: user._id }, secret, {
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: 86400
     });
 
@@ -40,7 +39,7 @@ router.post('/register', (req, res) => {
   (err, user) => {
     if (err) return res.status(500).send("There was a problem registering the user`.");
 
-    const token = jwt.sign({ id: user._id }, secret, {
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: 86400
     });
 
