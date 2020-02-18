@@ -2,9 +2,10 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const { connectDb, models } = require('./models');
+const { connectDb } = require('./models');
 const appRouter = require('./routes/app');
 const authRouter = require('./routes/auth');
+const todoRouter = require('./routes/todo');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -20,9 +21,8 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.use('/app', appRouter);
 app.use('/', authRouter);
+app.use('/todos', todoRouter);
 
-connectDb().then(() => {
-  console.log('DB started');
-});
+connectDb().then(() => {});
 
 module.exports = app;
