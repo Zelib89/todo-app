@@ -1,6 +1,7 @@
 ## Simple server for hosting react application
 
 ### Before running
+ * Install PM2 
  * Create SSL sertificate for HTTPS connection. 
 There should be files: `cert.key` and `cert.pem` in project root. <br>
 
