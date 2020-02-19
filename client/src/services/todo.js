@@ -2,7 +2,7 @@ import config from '../config';
 import { handleResponse } from '../utils/serverResponse';
 import { appendAccessHeader } from '../utils/headers';
 
-const saveTodo = (text) => {
+const saveTodo = async (text) => {
     const searchParams = new URLSearchParams();
     searchParams.set('text', text);
 
@@ -14,18 +14,26 @@ const saveTodo = (text) => {
         body: searchParams
     };
     const options = appendAccessHeader(requestOptions);
-    console.log(options);
 
     return fetch(`${config.apiUrl}/todos`, options)
       .then(handleResponse);
 }
 
-const getTodos = () => {
+const getTodos = async () => {
     return fetch(`${config.apiUrl}/todos`)
       .then(handleResponse);
 }
 
+const deleteTodo = async (todoId) => {
+  return fetch(`${config.apiUrl}/todos/${todoId}`, 
+    {
+      method: 'DELETE',
+    })
+    .then(handleResponse);
+}
+
 export const todoService = {
   saveTodo,
+  deleteTodo,
   getTodos
 };

@@ -18,7 +18,7 @@ router.get('/', verifyToken, (req, res) => {
 router.post('/', verifyToken, (req, res) => {
   Todo.create({
     text: req.body.text,
-    status:  req.body.status,
+    status: req.body.status,
     userId: req.userId,
   }, (err, data) => {
     if (err) return res.status(500).send("There was a problem adding new todo.");
