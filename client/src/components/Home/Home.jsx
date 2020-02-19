@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Formik } from 'formik';
 import Container from '@material-ui/core/Container';
 import TodoForm from '../TodoForm';
@@ -8,25 +8,33 @@ import './Home.css';
 
 const Home = () => {
   const [todos, setTodos] = useState([]);
+  const [lastTodo, setLastTodo] = useState('');
 
-  const onFormSubmit = (values, {resetForm}) => {
+  const onFormSubmit = async (values, {resetForm}) => {
     const { text } = values;
-    todoService.saveTodo(text).then(() => {
-      if (text !== undefined && text !== '') {
-        setTodos([
-          ...todos, {
-            id: todos.length,
-            text
-          }
-        ]);
-        resetForm();
-      }
-    });
+    const saved = await todoService.saveTodo(text);
+    setLastTodo(saved.data._id);
+    resetForm();
   };
 
-  const onTodoRemove = (index) => {
-    setTodos(todos.filter(t => t.id !== index));
+  useEffect(() => {
+    fetchTodos();
+  }, [lastTodo]);
+
+  const onTodoRemove = (todo) => {
+    todoService.deleteTodo(todo._id).then((d) => {
+      setLastTodo(`${lastTodo}${Date.now()}`)
+    });
   }
+
+  const fetchTodos = useCallback(async () => {
+    try {
+      const todoData = await todoService.getTodos();
+      setTodos(todoData.data);
+    } catch (e) {
+      console.error(e);
+    }
+  }, []); 
 
   return (
     <Container >
@@ -40,7 +48,7 @@ const Home = () => {
           <TodoItem
             key={todo.id}
             text={todo.text}
-            onRemove={onTodoRemove.bind(null, todo.id)}
+            onRemove={onTodoRemove.bind(null, todo)}
           />
         )}
       </Container>

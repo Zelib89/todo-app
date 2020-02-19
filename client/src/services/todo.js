@@ -6,31 +6,33 @@ const saveTodo = async (text) => {
     const searchParams = new URLSearchParams();
     searchParams.set('text', text);
 
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: searchParams
-    };
-    const options = appendAccessHeader(requestOptions);
+    const options = getOptions('POST');
+    options.body = searchParams;
 
     return fetch(`${config.apiUrl}/todos`, options)
       .then(handleResponse);
 }
 
 const getTodos = async () => {
-    return fetch(`${config.apiUrl}/todos`)
+    return fetch(`${config.apiUrl}/todos`, getOptions('GET'))
       .then(handleResponse);
 }
 
 const deleteTodo = async (todoId) => {
-  return fetch(`${config.apiUrl}/todos/${todoId}`, 
-    {
-      method: 'DELETE',
-    })
+  return fetch(`${config.apiUrl}/todos/${todoId}`, getOptions('DELETE'))
     .then(handleResponse);
 }
+
+const getOptions = (method) => {
+  const requestOptions = {
+    method,
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    },
+  };
+  return appendAccessHeader(requestOptions);
+
+};
 
 export const todoService = {
   saveTodo,

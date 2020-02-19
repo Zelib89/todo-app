@@ -21,7 +21,7 @@ router.post('/', verifyToken, (req, res) => {
     status: req.body.status,
     userId: req.userId,
   }, (err, data) => {
-    if (err) return res.status(500).send("There was a problem adding new todo.");
+    if (err) return res.status(500).send('There was a problem adding new todo.');
 
     res.status(200).send({ data });
   });
@@ -31,7 +31,7 @@ router.post('/', verifyToken, (req, res) => {
 router.delete('/:id', (req, res) => {
   const id = req.params.id;
   Todo.deleteOne({_id: id}, (err, data) => {
-    if (err) return res.status(500).send("There was a problem deleting todo.");
+    if (err) return res.status(500).send('There was a problem deleting todo.');
 
     res.status(200).send({ data });
   });
