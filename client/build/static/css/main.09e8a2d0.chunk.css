@@ -1,2 +1,0 @@
-:root{--primary-bg-color:#caf2d7;--secondary-bg-color:#60a9a6;--fieldset-color:#6bbbb8}body{background-color:#caf2d7;background-color:var(--primary-bg-color)}.todo-item,div .todo-item{background-color:#60a9a6;background-color:var(--secondary-bg-color)}.todo-text-field{width:100%}.todo-text-field input{z-index:5}.todo-text-field fieldset{background-color:#6bbbb8;background-color:var(--fieldset-color)}
-/*# sourceMappingURL=main.09e8a2d0.chunk.css.map */
