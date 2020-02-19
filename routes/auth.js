@@ -18,7 +18,7 @@ router.post('/login', (req, res) => {
       expiresIn: 86400
     });
 
-    res.status(200).send({ auth: true, token });
+    res.status(200).send({ auth: true, token, userName: user.username });
   });
 
 });

@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { HashRouter as Router, Route } from "react-router-dom";
-import IconButton from "@material-ui/core/IconButton";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import { history } from "../../utils/history";
-import { authService } from "../../services/auth";
-import PrivateRoute from "../PrivateRoute";
-import Home from "../Home";
-import LoginPage from "../LoginPage/LoginPage";
+import React, { useState, useEffect } from 'react';
+import { HashRouter as Router, Route } from 'react-router-dom';
+import IconButton from '@material-ui/core/IconButton';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { history } from '../../utils/history';
+import { authService } from '../../services/auth';
+import PrivateRoute from '../PrivateRoute';
+import Home from '../Home';
+import LoginPage from '../LoginPage/LoginPage';
 
 const App = () => {
   const [currentToken, setCurrentToken] = useState(null);
@@ -28,9 +28,12 @@ const App = () => {
       <div>
         <div className="jumbotron">
           {currentToken && (
-            <IconButton size="small" onClick={logout}>
-              <ExitToAppIcon />
-            </IconButton>
+            <div style={{float: 'right'}}>
+              <IconButton size="small" onClick={logout}>
+                <span>{authService.getCurrentUserName()}</span>
+                <ExitToAppIcon />
+              </IconButton>
+            </div>
           )}
           <div className="container">
             <div className="row">
@@ -38,11 +41,11 @@ const App = () => {
                 <PrivateRoute exact path="/" component={Home} />
                 <div
                   style={{
-                    display: "flex",
-                    width: "100%",
-                    height: "calc(100vh - 100px)",
-                    alignItems: "center",
-                    justifyContent: "center"
+                    display: 'flex',
+                    width: '100%',
+                    height: 'calc(100vh - 100px)',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}
                 >
                   <Route path="/login" component={LoginPage} />
