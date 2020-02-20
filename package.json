@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "build": "pm2 start ./bin/www --watch --name=todo-app",
+    "build": "pm2 start ./bin/www --watch --name=todo-app -i max",
     "build:client": "cd ./client && npm run build",
     "build:dev": "npm run build:client && npm run build"
   },
