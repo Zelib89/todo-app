@@ -3,7 +3,7 @@ const User = require('./user');
 const Todo = require('./todo');
 
 const connectDb = () => {
-  return mongoose.connect(process.env.DATABASE_URL, {
+  return mongoose.connect(process.env.DB_URL, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     user: process.env.DB_USERNAME,

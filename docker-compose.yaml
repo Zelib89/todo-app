@@ -1,0 +1,89 @@
+version: '3.6'
+
+services:
+
+  # todo-app-client:
+  #   build:
+  #     context: ./client
+  #     dockerfile: Dockerfile
+  #   container_name: todo-app-client
+  #   environment:
+  #     - NODE_ENV=production
+  #   labels:
+  #     group: "todo-app"
+  #     name: "todo-app-net"
+  #   networks:
+  #     - todo-app-net
+  #   restart: on-failure
+
+  # todo-app-server:
+  #   build:
+  #     context: ./
+  #     dockerfile: Dockerfile
+  #   container_name: todo-app-server
+  #   depends_on:
+  #     - todo-app-db
+  #   environment:
+  #     NODE_ENV: production
+  #   labels:
+  #     group: "todo-app"
+  #     name: "todo-app-net"
+  #   links:
+  #     - todo-app-db
+  #   networks:
+  #     - todo-app-net
+  #   restart: on-failure
+
+  todo-app-db:
+    command: mongod --auth
+    container_name: todo-app-db
+    environment:
+      - DB_DBNAME
+      - DB_PASSWORD
+      - DB_USERNAME
+    image: mongo:4.2-bionic
+    labels:
+      group: "todo-app"
+      name: "todo-app-net"
+    networks:
+      - todo-app-net
+    restart: on-failure
+    volumes:
+      - todo-app-db-data:/data/db
+      - ./mongodb/init.sh:/docker-entrypoint-initdb.d/init.sh
+
+  # todo-app-nginx:
+  #   build:
+  #     context: ./nginx-proxy-server
+  #     dockerfile: Dockerfile
+  #   container_name: todo-app-nginx
+  #   depends_on:
+  #     - todo-app-client
+  #     - todo-app-server
+  #   labels:
+  #     group: "todo-app"
+  #     name: "todo-app-net"
+  #   links:
+  #     - todo-app-client
+  #     - todo-app-server
+  #   networks:
+  #     - todo-app-net
+  #   restart: always
+  #   ports:
+  #     - "${NGINX_ENTRY_PORT}:80"
+
+networks:
+  todo-app-net:
+    driver: bridge
+    labels:
+      group: "todo-app"
+      name: "todo-app-net"
+    name: todo-app-net
+
+volumes:
+  todo-app-db-data:
+    driver: local
+    labels:
+      group: "todo-app"
+      name: "todo-app-db-data"
+    name: todo-app-db-data

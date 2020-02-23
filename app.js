@@ -9,6 +9,7 @@ const todoRouter = require('./routes/todo');
 const cors = require('cors');
 
 const app = express();
+const defaultPrefix = '/api';
 
 app.use(cors());
 app.use(logger('dev'));
@@ -18,10 +19,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.use('/app', appRouter);
-app.use('/', authRouter);
-app.use('/todos', todoRouter);
+app.use(`${defaultPrefix}/app`, appRouter);
+app.use(`${defaultPrefix}/`, authRouter);
+app.use(`${defaultPrefix}/todos`, todoRouter);
 
-connectDb().then(() => {});
+connectDb().then(() => {
+  console.log('Succesfully connected to database');
+});
 
 module.exports = app;
