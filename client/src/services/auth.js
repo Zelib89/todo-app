@@ -6,16 +6,14 @@ import { handleResponse } from '../utils/serverResponse';
 const currentToken = new BehaviorSubject(JSON.parse(localStorage.getItem('token')));
 
 const login = (username, password) => {
-    const searchParams = new URLSearchParams();
-    searchParams.set('username', username);
-    searchParams.set('password', password);
-
     const requestOptions = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: searchParams
+        body: new URLSearchParams({
+            username, password
+        })
     };
 
     return fetch(`${config.apiUrl}/login`, requestOptions)
@@ -25,7 +23,7 @@ const login = (username, password) => {
             localStorage.setItem('userName', JSON.stringify(response.userName));
             currentToken.next(response.token);
             return response.token;
-        });
+        }).catch(console.log);
 }
 
 const logout = () => {
