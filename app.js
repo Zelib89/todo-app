@@ -19,12 +19,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.use(`${defaultPrefix}/app`, appRouter);
+app.use('/app', appRouter);
 app.use(`${defaultPrefix}/`, authRouter);
 app.use(`${defaultPrefix}/todos`, todoRouter);
 
 connectDb().then(() => {
-  console.log('Succesfully connected to database');
+  console.log('Successfully connected to database');
 });
 
 module.exports = app;

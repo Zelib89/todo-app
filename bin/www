@@ -6,7 +6,7 @@
 require('../config');
 const app = require('../app');
 const debug = require('debug')('todo-app:server');
-const https = require('https');
+const http = require('http');
 const fs = require('fs');
 
 /**
@@ -19,11 +19,7 @@ app.set('port', port);
 /**
  * Create HTTP server.
  */
-const server = https.createServer({
-  key: fs.readFileSync('./cert.key'),
-  cert: fs.readFileSync('./cert.pem'),
-  passphrase: process.env.PASSPHRASE || 'test'
-}, app);
+const server = http.createServer({}, app);
 
 /**
  * Listen on provided port, on all network interfaces.
