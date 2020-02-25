@@ -1,0 +1,6 @@
+<<EOF
+    git pull origin master
+    npm install -g nodemon pm2
+    docker-compose up --build -t todo-app-server
+    exit
+EOF
