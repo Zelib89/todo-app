@@ -1,4 +1,6 @@
-<<EOF
+#!/bin/sh
+
+ssh ubuntu@3.16.151.179 <<EOF
     git pull origin master
     npm install -g nodemon pm2
     docker-compose up --build -t todo-app-server
