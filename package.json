@@ -23,11 +23,6 @@
     "morgan": "~1.9.1",
     "pm2": "^4.2.3"
   },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commit-message-validator"
-    }
-  },
   "config": {
     "commit-message-validator": {
       "pattern": "(^((fix)|(feat)|(docs)|(refactor)|(chore))(!)?:( BREAKING CHANGE)? ([a-zA-Z0-9]+.*)+)",
