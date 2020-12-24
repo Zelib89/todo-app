@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import config from '../config';
 import { handleResponse } from '../utils/serverResponse';
 
-const currentToken = new BehaviorSubject(JSON.parse(localStorage.getItem('token')));
+const currentToken = new BehaviorSubject('test-token');
 
 const login = (username, password) => {
     const requestOptions = {
@@ -30,7 +30,7 @@ const logout = () => {
     return fetch(`${config.apiUrl}/logout`).then(() => {
         localStorage.removeItem('token');
         localStorage.removeItem('userName');
-        currentToken.next(null);
+        currentToken.next('test');
     });
 }
 

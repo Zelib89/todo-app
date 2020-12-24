@@ -3,7 +3,7 @@ const User = require('./user');
 const Todo = require('./todo');
 
 const connectDb = () => {
-  const mongoDb = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`
+  const mongoDb = `mongodb://localhost:${process.env.DB_PORT}/${process.env.DB_NAME}`
 
   return mongoose.connect(mongoDb, {
     useUnifiedTopology: true,

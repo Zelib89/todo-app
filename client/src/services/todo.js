@@ -2,25 +2,26 @@ import config from '../config';
 import { handleResponse } from '../utils/serverResponse';
 import { appendAccessHeader } from '../utils/headers';
 
+const todos = []
+
 const saveTodo = async (text) => {
-    const searchParams = new URLSearchParams();
-    searchParams.set('text', text);
+    const newTodo = {
+      text: text,
+      id: text+ Date.now().toString()
+    };
+    todos.push(newTodo)
 
-    const options = getOptions('POST');
-    options.body = searchParams;
-
-    return fetch(`${config.apiUrl}/todos`, options)
-      .then(handleResponse);
+    return newTodo
 }
 
 const getTodos = async () => {
-    return fetch(`${config.apiUrl}/todos`, getOptions('GET'))
-      .then(handleResponse);
+    return todos;
 }
 
 const deleteTodo = async (todoId) => {
-  return fetch(`${config.apiUrl}/todos/${todoId}`, getOptions('DELETE'))
-    .then(handleResponse);
+  for (let i=0; i < todos.length; i++) {
+    if (todos[i].id === todoId) todos.splice(i, 1)
+  }
 }
 
 const getOptions = (method) => {

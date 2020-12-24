@@ -13,7 +13,7 @@ const Home = () => {
   const onFormSubmit = async (values, {resetForm}) => {
     const { text } = values;
     const saved = await todoService.saveTodo(text);
-    setLastTodo(saved.data._id);
+    setLastTodo(saved);
     resetForm();
   };
 
@@ -22,7 +22,7 @@ const Home = () => {
   }, [lastTodo]);
 
   const onTodoRemove = (todo) => {
-    todoService.deleteTodo(todo._id).then((d) => {
+    todoService.deleteTodo(todo.id).then((d) => {
       setLastTodo(`${lastTodo}${Date.now()}`)
     });
   }
@@ -30,7 +30,7 @@ const Home = () => {
   const fetchTodos = useCallback(async () => {
     try {
       const todoData = await todoService.getTodos();
-      setTodos(todoData.data);
+      setTodos(todoData);
     } catch (e) {
       console.error(e);
     }
