@@ -22,21 +22,17 @@ function removeFromLocalStorage(valueToRemove) {
 }
 }
 
-
 const saveTodo = async (text) => {
   const newTodo = {
     text: text,
     id: text+ Date.now().toString()
   };
-  todos.push(newTodo);
-
+  todos.push(newTodo);  
   addToLocalStorage(newTodo);
-  console.log("Local Storage Key : "+localStorage.getItem(setToStorage.key))
-  console.log("Local Storage Value : "+localStorage.getItem(setToStorage.value))
   return newTodo
 }
 
-const getTodos = async () => {
+const getTodos = async () => { 
   if (todos.length < 1) {
     let values = getTodosThatStartsFrom(authService.getCurrentUserName())
     for (let i=0;i<values.length; i++) {
@@ -54,7 +50,7 @@ const deleteTodo = async (todoId) => {
   for (let i=0; i < todos.length; i++) {
     if (todos[i].id === todoId) {
       let text = todos[i].text
-      todos.splice(i, 1);
+      todos.splice(i, 1);  
       removeFromLocalStorage(text);
     }
   };
