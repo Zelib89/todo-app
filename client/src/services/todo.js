@@ -6,20 +6,16 @@ import { appendAccessHeader } from '../utils/headers';
 const todos = []
 let setToStorage = {}
 
-function addToLocalStorage(value) {
+function addToLocalStorage(newTodo) {
   setToStorage = {
-    key: authService.getCurrentUserName()+Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 10),
-    value: value.text
+    key: authService.getCurrentUserName()+newTodo.id,
+    value: newTodo.text
   }
   localStorage.setItem(setToStorage.key, setToStorage.value)
 }
 
-function removeFromLocalStorage(valueToRemove) {
-  for(let i=0, len=localStorage.length; i<len; i++) {
-    let key = localStorage.key(i);
-    let value = localStorage[key];
-    if(value === valueToRemove) localStorage.removeItem(key);
-}
+function removeFromLocalStorage(key) {
+  localStorage.removeItem(key);
 }
 
 const saveTodo = async (text) => {
@@ -49,9 +45,8 @@ const getTodos = async () => {
 const deleteTodo = async (todoId) => {
   for (let i=0; i < todos.length; i++) {
     if (todos[i].id === todoId) {
-      let text = todos[i].text
       todos.splice(i, 1);  
-      removeFromLocalStorage(text);
+      removeFromLocalStorage(authService.getCurrentUserName()+todos[i].id);
     }
   };
 
