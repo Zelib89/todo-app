@@ -45,8 +45,9 @@ const getTodos = async () => {
 const deleteTodo = async (todoId) => {
   for (let i=0; i < todos.length; i++) {
     if (todos[i].id === todoId) {
+      let id = todos[i].id
       todos.splice(i, 1);  
-      removeFromLocalStorage(authService.getCurrentUserName()+todos[i].id);
+      removeFromLocalStorage(authService.getCurrentUserName()+id);
     }
   };
 
